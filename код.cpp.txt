@@ -1,0 +1,370 @@
+#include <stdio.h>
+#include <locale.h>
+#include <windows.h>
+#define LEN 50
+
+struct CALENDAR
+{
+    char meropriatie[50];
+    char familia[50];
+    char vid[50];
+    int data;
+    char month[50];
+    int year;
+}CALENDAR[LEN];
+
+int compereString (const char **x, const char **y)
+{
+    int rez=strcmp(*x,*y);
+    return rez;
+}
+
+func_dobvleniya_dat ()
+{
+    int a;
+    char b[100];
+    FILE *f=fopen ("kalendar.txt", "a");
+    printf ("\n¬ведите вид меропри€ти€: ");
+    scanf ("%s", &b);
+    fprintf (f, "%s ", b);
+    printf ("¬ведите фамилию: ");
+    scanf ("%s", &b);
+    fprintf (f, "%s ", b);
+    printf ("¬ведите само меропри€тие: ");
+    scanf ("%s", &b);
+    fprintf (f, "%s ", b);
+    printf ("¬ведите число: ");
+    scanf ("%i", &a);
+    fprintf (f, "%i ", a);
+    printf ("¬ведите мес€ц: ");
+    scanf ("%s", &b);
+    fprintf (f, "%s ", b);
+    printf ("¬ведите год: ");
+    scanf ("%i", &a);
+    fprintf (f, "%i\n", a);
+    fclose(f);
+}
+
+main ()
+{
+    HANDLE hConsoleHandle=GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsoleHandle, 0 | 15);
+    setlocale (LC_ALL, "Rus");
+    int k_meropriatie[LEN],k_familia[LEN],k_year[LEN], k_vid[LEN], k_month[LEN];
+    int i,j,K;
+    char a;
+    FILE *f=fopen("kalendar.txt", "r");
+    i=0;
+    while (!feof(f))
+    {
+        j=0;
+        fscanf(f, "%c", &CALENDAR[i].meropriatie[j]);
+        while (CALENDAR[i].meropriatie[j]!=' ')
+        {
+            j++;
+            fscanf(f, "%c", &CALENDAR[i].meropriatie[j]);
+        }
+        k_meropriatie[i]=j;
+        j=0;
+        fscanf(f, "%c", &CALENDAR[i].familia[j]);
+        while (CALENDAR[i].familia[j]!=' ')
+        {
+            j++;
+            fscanf(f, "%c", &CALENDAR[i].familia[j]);
+        }
+        k_familia[i]=j;
+        j=0;
+        fscanf(f, "%c", &CALENDAR[i].vid[j]);
+        while (CALENDAR[i].vid[j]!=' ')
+        {
+            j++;
+            fscanf(f, "%c", &CALENDAR[i].vid[j]);
+        }
+        k_vid[i]=j;
+        fscanf(f, "%i", &CALENDAR[i].data);
+        fscanf(f, "%c", &a);
+        j=0;
+        fscanf(f, "%c", &CALENDAR[i].month[j]);
+        while (CALENDAR[i].month[j]!=' ')
+        {
+            j++;
+            fscanf(f, "%c", &CALENDAR[i].month[j]);
+        }
+        k_month[i]=j;
+        fscanf(f, "%i", &CALENDAR[i].year);
+        fscanf(f, "%c", &a);
+        i++;
+    }
+    fclose(f);
+    K=i-1;
+    for (i=0; i<K; i++)
+    {
+        CALENDAR[i].meropriatie[k_meropriatie[i]]=0;
+        CALENDAR[i].familia[k_familia[i]]=0;
+        CALENDAR[i].vid[k_vid[i]]=0;
+        CALENDAR[i].month[k_month[i]]=0;
+    }
+    int q=1;
+    while (q!=0)
+    {
+        printf ("¬ведите:\n|1| - если хотите добавить запись\n");
+        printf ("|2| - если хотите удалить запись\n");
+        printf ("|3| - если хотите вывести записи по виду меропри€ти€\n");
+        printf ("|4| - если хотите вывести записи фамили€м\n");
+        printf ("|5| - если хотите вывести записи по мес€цам\n");
+        printf ("|0| - если хотите выйти\n>");
+        scanf ("%i", &q);
+        switch (q)
+        {
+            case 1:
+            {
+                func_dobvleniya_dat();
+                FILE *f=fopen("kalendar.txt", "r");
+                i=0;
+                while (!feof(f))
+                {
+                    j=0;
+                    fscanf(f, "%c", &CALENDAR[i].meropriatie[j]);
+                    while (CALENDAR[i].meropriatie[j]!=' ')
+                    {
+                        j++;
+                        fscanf(f, "%c", &CALENDAR[i].meropriatie[j]);
+                    }
+                    k_meropriatie[i]=j;
+                    j=0;
+                    fscanf(f, "%c", &CALENDAR[i].familia[j]);
+                    while (CALENDAR[i].familia[j]!=' ')
+                    {
+                        j++;
+                        fscanf(f, "%c", &CALENDAR[i].familia[j]);
+                    }
+                    k_familia[i]=j;
+                    j=0;
+                    fscanf(f, "%c", &CALENDAR[i].vid[j]);
+                    while (CALENDAR[i].vid[j]!=' ')
+                    {
+                        j++;
+                        fscanf(f, "%c", &CALENDAR[i].vid[j]);
+                    }
+                    k_vid[i]=j;
+                    fscanf(f, "%i", &CALENDAR[i].data);
+                    fscanf(f, "%c", &a);
+                    j=0;
+                    fscanf(f, "%c", &CALENDAR[i].month[j]);
+                    while (CALENDAR[i].month[j]!=' ')
+                    {
+                        j++;
+                        fscanf(f, "%c", &CALENDAR[i].month[j]);
+                    }
+                    k_month[i]=j;
+                    fscanf(f, "%i", &CALENDAR[i].year);
+                    fscanf(f, "%c", &a);
+                    i++;
+                }
+                fclose(f);
+                K=i-1;
+                for (i=0; i<K; i++)
+                {
+                    CALENDAR[i].meropriatie[k_meropriatie[i]]=0;
+                    CALENDAR[i].familia[k_familia[i]]=0;
+                    CALENDAR[i].vid[k_vid[i]]=0;
+                    CALENDAR[i].month[k_month[i]]=0;
+                }
+                break;
+            }
+            case 2:
+            {
+                char del_vid[LEN], del_familia[LEN];
+                printf ("\n¬ведите само меропри€тие дл€ удалени€: ");
+                scanf ("%s", &del_vid);
+                printf ("¬ведите фамилию: ");
+                scanf ("%s", &del_familia);
+                fopen("kalendar.txt", "w");
+                for (i=0; i<K; i++)
+                {
+                    if ((strcmp(del_vid,CALENDAR[i].vid)) || (strcmp(del_familia,CALENDAR[i].familia)))
+                    {
+                        SetConsoleTextAttribute(hConsoleHandle, 10 | 2);
+                        fprintf (f, "%s ", CALENDAR[i].meropriatie);
+                        fprintf (f, "%s ", CALENDAR[i].familia);
+                         fprintf (f, "%s ", CALENDAR[i].vid);
+                        fprintf (f, "%i ", CALENDAR[i].data);
+                        fprintf (f, "%s ", CALENDAR[i].month);
+                        fprintf (f, "%i\n", CALENDAR[i].year);
+                        SetConsoleTextAttribute(hConsoleHandle, 0 | 15);
+                    }
+                }
+                fclose(f);
+                FILE *f=fopen("kalendar.txt", "r");
+                i=0;
+                while (!feof(f))
+                {
+                    j=0;
+                    fscanf(f, "%c", &CALENDAR[i].meropriatie[j]);
+                    while (CALENDAR[i].meropriatie[j]!=' ')
+                    {
+                        j++;
+                        fscanf(f, "%c", &CALENDAR[i].meropriatie[j]);
+                    }
+                    k_meropriatie[i]=j;
+                    j=0;
+                    fscanf(f, "%c", &CALENDAR[i].familia[j]);
+                    while (CALENDAR[i].familia[j]!=' ')
+                    {
+                        j++;
+                        fscanf(f, "%c", &CALENDAR[i].familia[j]);
+                    }
+                    k_familia[i]=j;
+                    j=0;
+                    fscanf(f, "%c", &CALENDAR[i].vid[j]);
+                    while (CALENDAR[i].vid[j]!=' ')
+                    {
+                        j++;
+                        fscanf(f, "%c", &CALENDAR[i].vid[j]);
+                    }
+                    k_vid[i]=j;
+                    fscanf(f, "%i", &CALENDAR[i].data);
+                    fscanf(f, "%c", &a);
+                    j=0;
+                    fscanf(f, "%c", &CALENDAR[i].month[j]);
+                    while (CALENDAR[i].month[j]!=' ')
+                    {
+                        j++;
+                        fscanf(f, "%c", &CALENDAR[i].month[j]);
+                    }
+                    k_month[i]=j;
+                    fscanf(f, "%i", &CALENDAR[i].year);
+                    fscanf(f, "%c", &a);
+                    i++;
+                }
+                fclose(f);
+                K=i-1;
+                for (i=0; i<K; i++)
+                {
+                    CALENDAR[i].meropriatie[k_meropriatie[i]]=0;
+                    CALENDAR[i].familia[k_familia[i]]=0;
+                    CALENDAR[i].vid[k_vid[i]]=0;
+                    CALENDAR[i].month[k_month[i]]=0;
+                }
+                break;
+            }
+            case 3:
+            {
+                printf ("\nвведите вид меропри€ти€: ");
+                char vid_meropriatia[50];
+                scanf ("%s", &vid_meropriatia);
+                char **lines,**column;
+                lines=(char **)malloc(K*sizeof(char *));
+                column=(char **)malloc(K*sizeof(char *));
+                j=0;
+                int asd,o=0;
+                fopen("kalendar.txt", "r");
+                for (i=0; i<K; i++)
+                {
+                    if (!strcmp(vid_meropriatia,CALENDAR[i].meropriatie))
+                    {
+                        lines[j]=(char*)malloc(100);
+                        fgets(lines[j],100,f);
+                        asd=strcspn(lines[j], "\n");
+                        lines[j][asd]=0;
+                        j++;
+                    }
+                    else
+                    {
+                        column[o]=(char*)malloc(100);
+                        fgets(column[o],100,f);
+                        o++;
+                    }
+                }
+                fclose(f);
+                int clr=j;
+                SetConsoleTextAttribute(hConsoleHandle, 10 | 2);
+                for (j=0; j<clr; j++)
+                {
+                    puts(lines[j]);
+                }
+                SetConsoleTextAttribute(hConsoleHandle, 0 | 15);
+                break;
+            }
+            case 4:
+            {
+                printf ("\nвведите фамилию: ");
+                char vv_familia[50];
+                scanf ("%s", &vv_familia);
+                char **lines,**column;
+                lines=(char **)malloc(K*sizeof(char *));
+                column=(char **)malloc(K*sizeof(char *));
+                j=0;
+                int asd,o=0;
+                fopen("kalendar.txt", "r");
+                for (i=0; i<K; i++)
+                {
+                    if (!strcmp(vv_familia,CALENDAR[i].familia))
+                    {
+                        lines[j]=(char*)malloc(100);
+                        fgets(lines[j],100,f);
+                        asd=strcspn(lines[j], "\n");
+                        lines[j][asd]=0;
+                        j++;
+                    }
+                    else
+                    {
+                        column[o]=(char*)malloc(100);
+                        fgets(column[o],100,f);
+                        o++;
+                    }
+                }
+                fclose(f);
+                int clr=j;
+                SetConsoleTextAttribute(hConsoleHandle, 10 | 2);
+                for (j=0; j<clr; j++)
+                {
+                    puts(lines[j]);
+                }
+                SetConsoleTextAttribute(hConsoleHandle, 0 | 15);
+                break;
+            }
+            case 5:
+            {
+                printf ("\nвведите мес€ц: ");
+                char vv_month[50];
+                scanf ("%s", &vv_month);
+                char **lines,**column;
+                lines=(char **)malloc(K*sizeof(char *));
+                column=(char **)malloc(K*sizeof(char *));
+                j=0;
+                int asd,o=0;
+                fopen("kalendar.txt", "r");
+                for (i=0; i<K; i++)
+                {
+                    if (!strcmp(vv_month,CALENDAR[i].month))
+                    {
+                        lines[j]=(char*)malloc(100);
+                        fgets(lines[j],100,f);
+                        asd=strcspn(lines[j], "\n");
+                        lines[j][asd]=0;
+                        j++;
+                    }
+                    else
+                    {
+                        column[o]=(char*)malloc(100);
+                        fgets(column[o],100,f);
+                        o++;
+                    }
+                }
+                fclose(f);
+                int clr=j;
+                SetConsoleTextAttribute(hConsoleHandle, 10 | 2);
+                for (j=0; j<clr; j++)
+                {
+                    puts(lines[j]);
+                }
+                SetConsoleTextAttribute(hConsoleHandle, 0 | 15);
+                break;
+            }
+            case 0: break;
+            default: break;
+        }
+        printf ("\n");
+    }
+}
